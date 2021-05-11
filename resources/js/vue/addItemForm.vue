@@ -3,10 +3,10 @@
         <input type="text"
             class="form-control mr-2"
             v-model="item.name"
-            v-on:keyup.enter="addItem()"
+            v-on:keyup.enter="createItem()"
         />
         <button
-            @click="addItem()"
+            @click="createItem()"
             class = "bg-transparent h2 p-0 m-0 border-0"
             :class="[ item.name ? 'text-white' : 'text-muted']"
         >
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    data: () => {
+    data: function() {
         return {
             item: {
                 name: ""
@@ -25,24 +25,19 @@ export default {
         }
     },
     methods: {
-        addItem() {
+        createItem() {
             if (this.item.name == "") {
                 return;
             }
-            axios.post('api/items', {
-                item: this.item
-            })
-            .then( response => {
-                if ( response.status == 201 ) {
+            this.$store.dispatch('createItem', this.item).then(response => {
+                if (response.id) {
                     this.item.name = "";
-                    this.$emit('reload-list');
                 }
             })
-            .catch ( error => {
-                console.log(error);
-            })
+            .catch( error => {
+                this.$emit('reload-list');
+            });
         }
-    },
-    components: {}
+    }
 }
 </script>

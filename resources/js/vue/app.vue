@@ -4,13 +4,10 @@
         <div class="p-3 bg-info">
             <h2 class="text-center">Todo List</h2>
             <add-item-form
-                v-on:reload-list="getList()"
+                v-on:reload-list="setItems()"
             />
         </div>
-        <list-view
-            :items="items"
-            v-on:reload-list="getList()"
-        />
+        <list-view />
     </div>
 </template>
 
@@ -24,24 +21,13 @@ export default {
         addItemForm,
         listView
     },
-    data: function() {
-        return {
-            items: []
-        }
-    },
     methods: {
-        getList: function() {
-            axios.get('api/items')
-            .then( response => {
-                this.items = response.data;
-            })
-            .catch( error => {
-                console.log(error);
-            })
+        setItems() {
+            this.$store.dispatch('setItems');
         }
     },
-    created: function() {
-        this.getList();
+    mounted() {
+        this.$store.dispatch('setItems');
     }
 }
 </script>

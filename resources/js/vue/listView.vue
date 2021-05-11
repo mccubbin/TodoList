@@ -1,8 +1,7 @@
 <template>
     <div>
-        <div v-for="item in items">
+        <div v-for="(item, index) in items" :key="index" >
             <list-item
-                v-on:itemchanged="$emit('reload-list')"
                 :item="item"
             />
         </div>
@@ -14,7 +13,13 @@
 <script>
 import listItem from './listItem'
 export default {
-    props: ['items'],
-    components: { listItem }
+    computed: {
+        items() {
+            return this.$store.getters.getAllItems;
+        }
+    },
+    components: {
+        listItem
+    }
 }
 </script>

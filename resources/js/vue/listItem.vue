@@ -2,8 +2,8 @@
     <div class="d-flex align-items-center bg-info p-1 mt-1">
         <input
             type="checkbox"
-            @change="updateCheck()"
             v-model="item.completed"
+            @change="updateCheck()"
         />
         <span :class="[item.completed ? 'text-decoration-line-through text-muted' : '', 'w-100', 'ml-1']">
             {{ item.name }}
@@ -19,28 +19,10 @@ export default {
     props: ['item'],
     methods: {
         updateCheck: function() {
-            axios.put('api/items/' + this.item.id, {
-                item: this.item
-            })
-            .then( response => {
-                if (response.status == 200) {
-                    this.$emit('itemchanged');
-                }
-            })
-            .catch( error => {
-                console.log(error);
-            })
+            this.$store.dispatch('updateItem', this.item);
         },
         removeItem: function() {
-            axios.delete('api/items/' + this.item.id)
-            .then( response => {
-                if (response.status = 200) {
-                    this.$emit('itemchanged');
-                }
-            })
-            .catch( error => {
-                console.log(error);
-            })
+            this.$store.dispatch('deleteItem', this.item);
         }
     }
 }

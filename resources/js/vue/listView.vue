@@ -11,12 +11,11 @@
 
 
 <script>
-import listItem from './listItem'
+import listItem from './listItem';
+import { mapGetters } from "vuex";
 export default {
     computed: {
-        items() {
-            return this.$store.getters.getAllItems;
-        }
+        ...mapGetters({items: "getAllItems"})
     },
     components: {
         listItem

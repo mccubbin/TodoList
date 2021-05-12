@@ -13,7 +13,7 @@ library.add(faPlusSquare, faTrash)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 var vm = new Vue({
-    store,
     el: '#app',
-    components: { App }
+    components: { App },
+    store
 });

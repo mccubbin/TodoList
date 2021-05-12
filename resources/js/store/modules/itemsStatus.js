@@ -26,7 +26,7 @@ const actions = {
             state.commit('SAVE_ITEMS', response.data);
         })
         .catch( error => {
-            console.log(error)
+            console.log(error);
         });
     },
     async createItem(state, item) {

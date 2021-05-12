@@ -3,10 +3,10 @@
         <input type="text"
             class="form-control mr-2"
             v-model="item.name"
-            v-on:keyup.enter="createItem()"
+            v-on:keyup.enter="insertItem()"
         />
         <button
-            @click="createItem()"
+            @click="insertItem()"
             class = "bg-transparent h2 p-0 m-0 border-0"
             :class="[ item.name ? 'text-white' : 'text-muted']"
         >
@@ -16,20 +16,20 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-    data: function() {
-        return {
-            item: {
-                name: ""
-            }
+    data: () => ({
+        item: {
+            name: ""
         }
-    },
+    }),
     methods: {
-        createItem() {
+        ...mapActions(['createItem']),
+        insertItem() {
             if (this.item.name == "") {
                 return;
             }
-            this.$store.dispatch('createItem', this.item).then(response => {
+            this.createItem(this.item).then(response => {
                 if (response.id) {
                     this.item.name = "";
                 }

@@ -3,27 +3,26 @@
         <input
             type="checkbox"
             v-model="item.completed"
-            @change="updateCheck()"
+            @change="updateCheck(item)"
         />
         <span :class="[item.completed ? 'text-decoration-line-through text-muted' : '', 'w-100', 'ml-1']">
             {{ item.name }}
         </span>
-        <button @click="removeItem()" class="trashcan text-danger bg-transparent border-0">
+        <button @click="removeItem(item)" class="trashcan text-danger bg-transparent border-0">
             <font-awesome-icon icon="trash" />
         </button>
     </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
     props: ['item'],
     methods: {
-        updateCheck: function() {
-            this.$store.dispatch('updateItem', this.item);
-        },
-        removeItem: function() {
-            this.$store.dispatch('deleteItem', this.item);
-        }
+        ...mapActions({
+            updateCheck: "updateItem",
+            removeItem: "deleteItem"
+        })
     }
 }
 </script>

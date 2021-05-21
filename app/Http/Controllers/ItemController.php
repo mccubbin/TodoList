@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class ItemController extends Controller
 {
@@ -73,7 +72,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         $item->update($request->item);
-        $item->completed_at = $request->item['completed'] ? Carbon::now() : null;
+        $item->completed_at = $request->item['completed'] ? now() : null;
 
         return $item;
     }
